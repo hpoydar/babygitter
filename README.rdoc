@@ -19,10 +19,14 @@ Generate the report with the provided rake task (from the repo root):
 
 	rake babygitter:report
 
-Or
-	
-	b = Babygitter::ReportGenerator.new
-	b.write_report
+Or in a cap task:
+
+	namespace :babygitter
+		desc "Run the babygitter report"
+		task :report, :roles => :app do
+		  run "cd #{latest_release} && rake babygitter:report RAILS_ENV=#{rails_env || 'production'}"
+		end
+	end
 
 In both cases, the report will be written to <tt>public/babygitter_report.html</tt>
 
